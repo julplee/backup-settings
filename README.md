@@ -19,4 +19,3 @@ This program backups Windows settings as configured in a `backup-config.json` fi
 
 [] improve backup (e.g. backup elsewhere than in this repo)
 [] allow reverse copy of backup to system (e.g. for a quick reinstall of the system)
-go
