@@ -56,8 +56,8 @@ func copyFollowingConfigFile(configFile string) error {
 	_ = json.Unmarshal([]byte(file), &data)
 
 	for _, folderToSave := range data.FoldersToSave {
+		backupFolder := root + "/backup/" + folderToSave
 		folderToSave = filepath.Join(data.UserPath, folderToSave)
-		backupFolder := root + "/backup"
 
 		err := copyFolderToBackupFolder(folderToSave, backupFolder)
 
