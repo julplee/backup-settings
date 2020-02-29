@@ -5,17 +5,16 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-
-	"github.com/otiai10/copy"
 )
 
 const (
-	var root = "./settings-to-copy"
+	root = "./settings-to-copy"
 )
 
 type config struct {
-	UserPath      string   `json:"user_path"`
-	FoldersToSave []string `json:"folders_to_save"`
+	UserPath        string   `json:"user_path"`
+	FoldersToSave   []string `json:"folders_to_save"`
+	FoldersToIgnore []string `json:"folders_to_ignore"`
 }
 
 func main() {
@@ -55,11 +54,17 @@ func copyFollowingConfigFile(configFile string) error {
 
 	_ = json.Unmarshal([]byte(file), &data)
 
+	var toSkip []string
+	for _, folderToSkip := range data.FoldersToIgnore {
+		folderToSkip = filepath.Join(data.UserPath, folderToSkip)
+		toSkip = append(toSkip, folderToSkip)
+	}
+
 	for _, folderToSave := range data.FoldersToSave {
 		backupFolder := root + "/backup/" + folderToSave
 		folderToSave = filepath.Join(data.UserPath, folderToSave)
 
-		err := copyFolderToBackupFolder(folderToSave, backupFolder)
+		err := copyFolderToBackupFolder(folderToSave, backupFolder, toSkip)
 
 		if err != nil {
 			return err
@@ -69,8 +74,8 @@ func copyFollowingConfigFile(configFile string) error {
 	return nil
 }
 
-func copyFolderToBackupFolder(folderToSave string, backupFolder string) error {
-	err := copy.Copy(folderToSave, backupFolder)
+func copyFolderToBackupFolder(folderToSave string, backupFolder string, toSkip []string) error {
+	err := Copy(folderToSave, backupFolder, toSkip)
 
 	if err != nil {
 		return err

@@ -2,6 +2,9 @@
     "user_path": "c:\\users\\julie",
     "folders_to_save": [
         ".ssh"
+    ],
+    "folders_to_ignore": [
+        ".ssh\\archive"
     ]
     
 }
