@@ -9,7 +9,9 @@ import (
 	"github.com/otiai10/copy"
 )
 
-var root = "./settings-to-copy"
+const (
+	var root = "./settings-to-copy"
+)
 
 type config struct {
 	UserPath      string   `json:"user_path"`
@@ -19,6 +21,7 @@ type config struct {
 func main() {
 	var configFiles []string
 
+	// look for backup config files
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
