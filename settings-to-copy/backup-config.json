@@ -1,10 +1,17 @@
 {
     "user_path": "c:\\users\\julie",
     "folders_to_save": [
-        ".ssh"
+        ".ssh",
+        ".android"
     ],
     "folders_to_ignore": [
-        ".ssh\\archive"
+        ".ssh\\archive",
+        ".android/breakpad",
+        ".android/build-cache",
+        ".android/cache",
+        ".android/metrics",
+        ".android/studio",
+        ".android/avd"
     ]
     
 }
