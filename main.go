@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	"github.com/otiai10/copy"
 )
 
 const (
@@ -54,10 +56,10 @@ func copyFollowingConfigFile(configFile string) error {
 
 	_ = json.Unmarshal([]byte(file), &data)
 
-	var toSkip []string
+	toSkip := make(map[string]struct{})
 	for _, folderToSkip := range data.FoldersToIgnore {
 		folderToSkip = filepath.Join(data.UserPath, folderToSkip)
-		toSkip = append(toSkip, folderToSkip)
+		toSkip[folderToSkip] = struct{}{}
 	}
 
 	for _, folderToSave := range data.FoldersToSave {
@@ -74,8 +76,16 @@ func copyFollowingConfigFile(configFile string) error {
 	return nil
 }
 
-func copyFolderToBackupFolder(folderToSave string, backupFolder string, toSkip []string) error {
-	err := Copy(folderToSave, backupFolder, toSkip)
+func copyFolderToBackupFolder(folderToSave string, backupFolder string, toSkip map[string]struct{}) error {
+	opt := copy.Options{Skip: func(src string) bool {
+		if _, isToSkip := toSkip[src]; isToSkip {
+			return true
+		}
+
+		return false
+	}}
+
+	err := copy.Copy(folderToSave, backupFolder, opt)
 
 	if err != nil {
 		return err
