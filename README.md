@@ -1,6 +1,6 @@
-# windows-settings
+# backup-settings
 
-This program backups Windows settings as configured in a `backup-config.json` file put in a folder within the executing folder
+This program backups chosen settings as configured in a `backup-config.json` file put in a folder within the executing folder
 
 ## Configuration files
 
