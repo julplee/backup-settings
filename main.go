@@ -15,6 +15,7 @@ const (
 
 type config struct {
 	UserPath        string   `json:"user_path"`
+	BackupPath      string   `json:"backup_path"`
 	FoldersToSave   []string `json:"folders_to_save"`
 	FoldersToIgnore []string `json:"folders_to_ignore"`
 }
@@ -40,12 +41,12 @@ func main() {
 	}
 
 	for _, configFile := range configFiles {
-		copyFollowingConfigFile(configFile)
+		backupFollowingConfigFile(configFile)
 	}
 
 }
 
-func copyFollowingConfigFile(configFile string) error {
+func backupFollowingConfigFile(configFile string) error {
 	file, err := ioutil.ReadFile(configFile)
 
 	if err != nil {
@@ -63,7 +64,7 @@ func copyFollowingConfigFile(configFile string) error {
 	}
 
 	for _, folderToSave := range data.FoldersToSave {
-		backupFolder := root + "/backup/" + folderToSave
+		backupFolder := data.BackupPath + folderToSave
 		folderToSave = filepath.Join(data.UserPath, folderToSave)
 
 		err := copyFolderToBackupFolder(folderToSave, backupFolder, toSkip)

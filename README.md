@@ -7,6 +7,7 @@ This program backups chosen directories and files as configured in a `backup-con
 ```json
 {
     "user_path": "c:\\path\\of\\user",
+    "backup_path": "c:\\backup\\path",
     "folders_to_save": [
         ".ssh",
         ".android",
@@ -22,5 +23,5 @@ This program backups chosen directories and files as configured in a `backup-con
 ## Todos
 
 - [x] works with `/` or `\` in path
-- [ ] improve backup (e.g. backup elsewhere than in this repo)
+- [x] improve backup (e.g. backup elsewhere than in this repo)
 - [ ] allow reverse copy of backup to system (e.g. for a quick reinstall of the system)
