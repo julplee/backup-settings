@@ -64,7 +64,7 @@ func backupFollowingConfigFile(configFile string) error {
 	}
 
 	for _, folderToSave := range data.FoldersToSave {
-		backupFolder := data.BackupPath + folderToSave
+		backupFolder := data.BackupPath + "/" + folderToSave
 		folderToSave = filepath.Join(data.UserPath, folderToSave)
 
 		err := copyFolderToBackupFolder(folderToSave, backupFolder, toSkip)
